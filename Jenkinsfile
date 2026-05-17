@@ -14,7 +14,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo 'Ejecutando pruebas unitarias...'
+                //echo 'Ejecutando pruebas unitarias...'
                 // set CI=true evita que los tests se queden esperando interacción del usuario
                 bat 'set CI=true&&npm.cmd test'
             }

@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                bat 'npm.cmd test'
+                bat 'set CI=true&&npm.cmd test'
             }
         }
     }

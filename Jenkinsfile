@@ -32,8 +32,8 @@ pipeline {
                     // 3. Esperamos un poco para que Node logre estabilizarse
                     bat "timeout /t 10 /nobreak"
                 }
+            }
         }
-    }
     }
 
     post {

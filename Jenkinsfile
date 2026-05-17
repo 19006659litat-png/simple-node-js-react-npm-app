@@ -30,7 +30,7 @@ pipeline {
                     bat "set PORT=3000&& start /B npm.cmd start > output.log 2>&1"
                     
                     // 3. Esperamos un poco para que Node logre estabilizarse
-                    bat "timeout /t 10 /nobreak"
+                    bat "ping -n 10 127.0.0.1 > nul"
                 }
             }
         }

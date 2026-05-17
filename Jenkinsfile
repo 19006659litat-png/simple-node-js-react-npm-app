@@ -21,26 +21,19 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Iniciando despliegue local en la VM...'
                 script {
-                    /* 
-                       1. Intentamos detener cualquier proceso de Node previo en el puerto 3000.
-                       2. 'taskkill' forzará el cierre de instancias antiguas de la app.
-                       3. Usamos '|| ver > nul' para que si no hay procesos abiertos, el pipeline no falle.
-                    */
+                    // 1. Limpiamos
                     bat "taskkill /F /IM node.exe /T || ver > nul"
-
-                    /* 
-                       4. Lanzamos la aplicación.
-                       5. 'start /B' es CRUCIAL: abre el proceso en segundo plano (background).
-                       6. Sin '/B', Jenkins se quedaría "colgado" esperando a que la app se cierre.
-                    */
-                    bat "start /B npm.cmd start"
                     
-                    echo 'PROCESO FINALIZADO: La aplicación está corriendo en http://localhost:3000'
+                    // 2. Intentamos lanzar la app forzando el puerto 3000 y 
+                    // enviando la salida a un archivo para ver si hay errores ocultos
+                    bat "set PORT=3000&& start /B npm.cmd start > output.log 2>&1"
+                    
+                    // 3. Esperamos un poco para que Node logre estabilizarse
+                    bat "timeout /t 10 /nobreak"
                 }
-            }
         }
+    }
     }
 
     post {

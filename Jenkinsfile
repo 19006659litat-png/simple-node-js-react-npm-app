@@ -9,7 +9,7 @@ pipeline {
                 bat 'npm.cmd run build' 
             }
         }
-        Stage('Test') {
+        stage('Test') {
             steps {
                 bat 'npm.cmd test'
             }
